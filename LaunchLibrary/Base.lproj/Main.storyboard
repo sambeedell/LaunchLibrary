@@ -13,7 +13,7 @@
         <!--Launch Library-->
         <scene sceneID="VPY-62-0gT">
             <objects>
-                <tableViewController id="5E8-rx-LM6" customClass="RocketLaunchesVC" customModule="LaunchLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="5E8-rx-LM6" customClass="RocketLaunchesController" customModule="LaunchLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="103" sectionHeaderHeight="28" sectionFooterHeight="28" id="Axr-Tf-Ifv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -23,14 +23,14 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="103"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ug4-6M-DgF" id="EU8-4l-l9G">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="102"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="103"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="5E8-rx-LM6" id="NSO-n2-LlB"/>
-                            <outlet property="delegate" destination="5E8-rx-LM6" id="CLY-ea-Tgr"/>
+                            <outlet property="dataSource" destination="5E8-rx-LM6" id="Ayx-vL-7Xf"/>
+                            <outlet property="delegate" destination="5E8-rx-LM6" id="Pfg-hs-5i7"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Launch Library" id="8Tg-mF-Qu8"/>
@@ -42,10 +42,10 @@
             </objects>
             <point key="canvasLocation" x="-551.20000000000005" y="143.47826086956522"/>
         </scene>
-        <!--Rocket LaunchVC-->
+        <!--Rocket Launch Controller-->
         <scene sceneID="zVc-qp-SB8">
             <objects>
-                <viewController id="zBL-hh-i7X" customClass="RocketLaunchVC" customModule="LaunchLibrary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="zBL-hh-i7X" customClass="RocketLaunchController" customModule="LaunchLibrary" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Bnt-oh-akr"/>
                         <viewControllerLayoutGuide type="bottom" id="gJ9-yR-Av6"/>

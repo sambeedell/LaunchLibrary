@@ -7,22 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6013E3402052A808002EDEC3 /* LaunchLibraryAPIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6013E33F2052A808002EDEC3 /* LaunchLibraryAPIHandler.swift */; };
+		6013E34420582A9F002EDEC3 /* RocketLaunchesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6013E34320582A9F002EDEC3 /* RocketLaunchesModel.swift */; };
+		6013E34720583845002EDEC3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6013E34620583845002EDEC3 /* Constants.swift */; };
+		602E5F61204EE608007789A2 /* LaunchLibraryNSCodingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602E5F60204EE608007789A2 /* LaunchLibraryNSCodingTests.swift */; };
+		603DA0C2205BD77100DD5FE1 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603DA0C1205BD77100DD5FE1 /* NetworkService.swift */; };
+		603DA0C5205BF5E600DD5FE1 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603DA0C4205BF5E600DD5FE1 /* UIImage+Extension.swift */; };
+		603DA0C72060278300DD5FE1 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603DA0C62060278300DD5FE1 /* Box.swift */; };
+		603DA0C920603D9F00DD5FE1 /* LaunchLibraryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603DA0C820603D9F00DD5FE1 /* LaunchLibraryAPI.swift */; };
 		609483892017CA7000C85250 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609483882017CA7000C85250 /* AppDelegate.swift */; };
-		6094838B2017CA7000C85250 /* RocketLaunchesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094838A2017CA7000C85250 /* RocketLaunchesVC.swift */; };
+		6094838B2017CA7000C85250 /* RocketLaunchesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094838A2017CA7000C85250 /* RocketLaunchesController.swift */; };
 		6094838E2017CA7000C85250 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6094838C2017CA7000C85250 /* Main.storyboard */; };
 		609483902017CA7000C85250 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6094838F2017CA7000C85250 /* Assets.xcassets */; };
 		609483932017CA7000C85250 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 609483912017CA7000C85250 /* LaunchScreen.storyboard */; };
 		6094839E2017CA7000C85250 /* LaunchLibraryNetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094839D2017CA7000C85250 /* LaunchLibraryNetworkTests.swift */; };
-		609483A92017E33700C85250 /* LaunchLibraryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609483A82017E33700C85250 /* LaunchLibraryAPI.swift */; };
 		609483AB2017E34E00C85250 /* RocketLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609483AA2017E34E00C85250 /* RocketLaunch.swift */; };
 		609483AD2017E3CF00C85250 /* RocketLaunches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609483AC2017E3CF00C85250 /* RocketLaunches.swift */; };
-		609483AF2017E7DA00C85250 /* RocketLaunchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609483AE2017E7DA00C85250 /* RocketLaunchVC.swift */; };
+		609483AF2017E7DA00C85250 /* RocketLaunchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609483AE2017E7DA00C85250 /* RocketLaunchController.swift */; };
 		609483B2201818EE00C85250 /* RocketLaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609483B0201818EE00C85250 /* RocketLaunchCell.swift */; };
 		609483B3201818EE00C85250 /* RocketLaunchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 609483B1201818EE00C85250 /* RocketLaunchCell.xib */; };
-		609483B52018748F00C85250 /* LaunchInfoCell.png in Resources */ = {isa = PBXBuildFile; fileRef = 609483B42018748F00C85250 /* LaunchInfoCell.png */; };
-		609483B7201878E400C85250 /* LaunchInfoSmallCell.png in Resources */ = {isa = PBXBuildFile; fileRef = 609483B6201878E400C85250 /* LaunchInfoSmallCell.png */; };
 		609483BD20188F2400C85250 /* Rocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609483BC20188F2400C85250 /* Rocket.swift */; };
-		609483BF2018971E00C85250 /* no-image-placeholder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 609483BE2018971E00C85250 /* no-image-placeholder.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,9 +40,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6013E33F2052A808002EDEC3 /* LaunchLibraryAPIHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchLibraryAPIHandler.swift; sourceTree = "<group>"; };
+		6013E34320582A9F002EDEC3 /* RocketLaunchesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RocketLaunchesModel.swift; sourceTree = "<group>"; };
+		6013E34620583845002EDEC3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		602E5F60204EE608007789A2 /* LaunchLibraryNSCodingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchLibraryNSCodingTests.swift; sourceTree = "<group>"; };
+		603DA0C1205BD77100DD5FE1 /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		603DA0C4205BF5E600DD5FE1 /* UIImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		603DA0C62060278300DD5FE1 /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
+		603DA0C820603D9F00DD5FE1 /* LaunchLibraryAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchLibraryAPI.swift; sourceTree = "<group>"; };
 		609483852017CA7000C85250 /* LaunchLibrary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaunchLibrary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		609483882017CA7000C85250 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6094838A2017CA7000C85250 /* RocketLaunchesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketLaunchesVC.swift; sourceTree = "<group>"; };
+		6094838A2017CA7000C85250 /* RocketLaunchesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketLaunchesController.swift; sourceTree = "<group>"; };
 		6094838D2017CA7000C85250 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6094838F2017CA7000C85250 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		609483922017CA7000C85250 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -46,16 +58,12 @@
 		609483992017CA7000C85250 /* LaunchLibraryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LaunchLibraryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6094839D2017CA7000C85250 /* LaunchLibraryNetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchLibraryNetworkTests.swift; sourceTree = "<group>"; };
 		6094839F2017CA7000C85250 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		609483A82017E33700C85250 /* LaunchLibraryAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchLibraryAPI.swift; sourceTree = SOURCE_ROOT; };
 		609483AA2017E34E00C85250 /* RocketLaunch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RocketLaunch.swift; sourceTree = "<group>"; };
 		609483AC2017E3CF00C85250 /* RocketLaunches.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RocketLaunches.swift; sourceTree = "<group>"; };
-		609483AE2017E7DA00C85250 /* RocketLaunchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RocketLaunchVC.swift; sourceTree = "<group>"; };
+		609483AE2017E7DA00C85250 /* RocketLaunchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RocketLaunchController.swift; sourceTree = "<group>"; };
 		609483B0201818EE00C85250 /* RocketLaunchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RocketLaunchCell.swift; sourceTree = "<group>"; };
 		609483B1201818EE00C85250 /* RocketLaunchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RocketLaunchCell.xib; sourceTree = "<group>"; };
-		609483B42018748F00C85250 /* LaunchInfoCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchInfoCell.png; sourceTree = "<group>"; };
-		609483B6201878E400C85250 /* LaunchInfoSmallCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchInfoSmallCell.png; sourceTree = "<group>"; };
 		609483BC20188F2400C85250 /* Rocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rocket.swift; sourceTree = "<group>"; };
-		609483BE2018971E00C85250 /* no-image-placeholder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "no-image-placeholder.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +84,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6013E34520582AC7002EDEC3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				6094838A2017CA7000C85250 /* RocketLaunchesController.swift */,
+				609483AE2017E7DA00C85250 /* RocketLaunchController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		602E5F5F204EE5DB007789A2 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				603DA0C1205BD77100DD5FE1 /* NetworkService.swift */,
+				603DA0C820603D9F00DD5FE1 /* LaunchLibraryAPI.swift */,
+				6013E33F2052A808002EDEC3 /* LaunchLibraryAPIHandler.swift */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+		603DA0C3205BF5BC00DD5FE1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				603DA0C4205BF5E600DD5FE1 /* UIImage+Extension.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		6094837C2017CA7000C85250 = {
 			isa = PBXGroup;
 			children = (
@@ -97,10 +132,11 @@
 		609483872017CA7000C85250 /* LaunchLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				609483882017CA7000C85250 /* AppDelegate.swift */,
-				609483B820188D3E00C85250 /* Model */,
-				609483B920188D6700C85250 /* View Controllers */,
-				609483BB20188D8300C85250 /* Additional UI */,
+				603DA0C3205BF5BC00DD5FE1 /* Extensions */,
+				609483942017CA7000C85250 /* Info.plist */,
+				609483B820188D3E00C85250 /* Models (Structs) */,
+				609483BB20188D8300C85250 /* Views */,
+				609483B920188D6700C85250 /* View Models */,
 			);
 			path = LaunchLibrary;
 			sourceTree = "<group>";
@@ -109,31 +145,33 @@
 			isa = PBXGroup;
 			children = (
 				6094839D2017CA7000C85250 /* LaunchLibraryNetworkTests.swift */,
+				602E5F60204EE608007789A2 /* LaunchLibraryNSCodingTests.swift */,
 				6094839F2017CA7000C85250 /* Info.plist */,
 			);
 			path = LaunchLibraryTests;
 			sourceTree = "<group>";
 		};
-		609483B820188D3E00C85250 /* Model */ = {
+		609483B820188D3E00C85250 /* Models (Structs) */ = {
 			isa = PBXGroup;
 			children = (
-				609483A82017E33700C85250 /* LaunchLibraryAPI.swift */,
+				609483882017CA7000C85250 /* AppDelegate.swift */,
+				6013E34620583845002EDEC3 /* Constants.swift */,
+				602E5F5F204EE5DB007789A2 /* Networking */,
 				609483BC20188F2400C85250 /* Rocket.swift */,
 				609483AA2017E34E00C85250 /* RocketLaunch.swift */,
 				609483AC2017E3CF00C85250 /* RocketLaunches.swift */,
 			);
-			name = Model;
+			name = "Models (Structs)";
 			sourceTree = "<group>";
 		};
-		609483B920188D6700C85250 /* View Controllers */ = {
+		609483B920188D6700C85250 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
-				6094838A2017CA7000C85250 /* RocketLaunchesVC.swift */,
-				609483AE2017E7DA00C85250 /* RocketLaunchVC.swift */,
-				6094838C2017CA7000C85250 /* Main.storyboard */,
-				609483BA20188D7000C85250 /* Custom Views */,
+				603DA0C62060278300DD5FE1 /* Box.swift */,
+				6013E34320582A9F002EDEC3 /* RocketLaunchesModel.swift */,
+				6013E34520582AC7002EDEC3 /* Controllers */,
 			);
-			name = "View Controllers";
+			name = "View Models";
 			sourceTree = "<group>";
 		};
 		609483BA20188D7000C85250 /* Custom Views */ = {
@@ -145,17 +183,15 @@
 			name = "Custom Views";
 			sourceTree = "<group>";
 		};
-		609483BB20188D8300C85250 /* Additional UI */ = {
+		609483BB20188D8300C85250 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6094838C2017CA7000C85250 /* Main.storyboard */,
+				609483BA20188D7000C85250 /* Custom Views */,
 				6094838F2017CA7000C85250 /* Assets.xcassets */,
 				609483912017CA7000C85250 /* LaunchScreen.storyboard */,
-				609483942017CA7000C85250 /* Info.plist */,
-				609483B42018748F00C85250 /* LaunchInfoCell.png */,
-				609483B6201878E400C85250 /* LaunchInfoSmallCell.png */,
-				609483BE2018971E00C85250 /* no-image-placeholder.jpg */,
 			);
-			name = "Additional UI";
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,12 +279,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				609483BF2018971E00C85250 /* no-image-placeholder.jpg in Resources */,
 				609483932017CA7000C85250 /* LaunchScreen.storyboard in Resources */,
-				609483B52018748F00C85250 /* LaunchInfoCell.png in Resources */,
 				609483B3201818EE00C85250 /* RocketLaunchCell.xib in Resources */,
 				609483902017CA7000C85250 /* Assets.xcassets in Resources */,
-				609483B7201878E400C85250 /* LaunchInfoSmallCell.png in Resources */,
 				6094838E2017CA7000C85250 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,11 +302,17 @@
 			files = (
 				609483AB2017E34E00C85250 /* RocketLaunch.swift in Sources */,
 				609483AD2017E3CF00C85250 /* RocketLaunches.swift in Sources */,
-				609483A92017E33700C85250 /* LaunchLibraryAPI.swift in Sources */,
-				609483AF2017E7DA00C85250 /* RocketLaunchVC.swift in Sources */,
-				6094838B2017CA7000C85250 /* RocketLaunchesVC.swift in Sources */,
+				6013E34420582A9F002EDEC3 /* RocketLaunchesModel.swift in Sources */,
+				609483AF2017E7DA00C85250 /* RocketLaunchController.swift in Sources */,
+				603DA0C2205BD77100DD5FE1 /* NetworkService.swift in Sources */,
+				6013E34720583845002EDEC3 /* Constants.swift in Sources */,
+				6094838B2017CA7000C85250 /* RocketLaunchesController.swift in Sources */,
 				609483B2201818EE00C85250 /* RocketLaunchCell.swift in Sources */,
 				609483892017CA7000C85250 /* AppDelegate.swift in Sources */,
+				6013E3402052A808002EDEC3 /* LaunchLibraryAPIHandler.swift in Sources */,
+				603DA0C5205BF5E600DD5FE1 /* UIImage+Extension.swift in Sources */,
+				603DA0C920603D9F00DD5FE1 /* LaunchLibraryAPI.swift in Sources */,
+				603DA0C72060278300DD5FE1 /* Box.swift in Sources */,
 				609483BD20188F2400C85250 /* Rocket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,6 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				602E5F61204EE608007789A2 /* LaunchLibraryNSCodingTests.swift in Sources */,
 				6094839E2017CA7000C85250 /* LaunchLibraryNetworkTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -484,6 +524,7 @@
 				609483A42017CA7000C85250 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		609483A52017CA7000C85250 /* Build configuration list for PBXNativeTarget "LaunchLibraryTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +533,7 @@
 				609483A72017CA7000C85250 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

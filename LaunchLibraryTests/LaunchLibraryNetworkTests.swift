@@ -56,7 +56,7 @@ class LaunchLibraryNetworkTests: XCTestCase {
     func testImageDownload() {
         
         measure {
-            self.rocket = Rocket(id: 1234, name: "Testing", agencies: [["Test":"obj" as AnyObject]], imageURL: "https://s3.amazonaws.com/launchlibrary/RocketImages/placeholder_1920.png")
+            self.rocket = Rocket(id: 1234, name: "Testing", agencies: [["Test":"obj" as AnyObject]], imageString: "https://s3.amazonaws.com/launchlibrary/RocketImages/placeholder_1920.png")
         }
     }
     

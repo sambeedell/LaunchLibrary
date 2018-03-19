@@ -8,6 +8,18 @@
 
 import Foundation
 
-struct RocketLaunches {
-    let collection : [RocketLaunch]
+class RocketLaunches: NSObject {
+    
+    var collection: [RocketLaunch]?
+    
+//    override init() {
+//        super.init()
+//        NetworkService.sharedInstance.fetchRocketLaunches(amount: amount, completionHandler: { (rocketLaunches) in
+//            // TODO: Should be weak reference to self in this completion handler...
+//            
+//            // Using KVO for collection
+//            self.collection = rocketLaunches
+//        })
+//    }
+    
 }

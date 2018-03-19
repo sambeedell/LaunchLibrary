@@ -17,6 +17,25 @@ class RocketLaunchCell: UITableViewCell {
     @IBOutlet var statusLabel: UILabel!
     @IBOutlet var infoLabel: UILabel!
     
+    var launch: RocketLaunch? {
+        didSet {
+            // Format Properties
+            if let date = launch?.date {
+                dateLabel.text = String(date.characters.dropLast(12)) // Remove Time!
+            }
+            if let status = launch?.status {
+                let statusString : String = status == true ? "Ok!" : "Unlikely..."
+                statusLabel.text = statusString
+            }
+            if let name = launch?.name {
+                nameLabel.text = name
+            }
+            if let info = launch?.launchWindow {
+                infoLabel.text = "Launch Window: \(info.first!) - \(info.last!)"
+            }
+        }
+    }
+    
     func commonInit (date: String, name : String, status : String, info : String) {
         dateLabel.text = date
         nameLabel.text = name
@@ -34,5 +53,4 @@ class RocketLaunchCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
 }

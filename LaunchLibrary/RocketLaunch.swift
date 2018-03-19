@@ -8,19 +8,20 @@
 
 import UIKit
 
-class RocketLaunch : NSObject {
+class RocketLaunch : NSObject, NSCoding {
     
-    var id : Int
-    var name : String
-    var date : String // (net) - sorted ascending (default), should convert to Date
-    var status : Bool
-    var launchWindow : Array<Any>
-    var launchFrom : String // Location
-    var whereToWatch : String // URL
-    var rocket : Rocket! // Details about rocket (inc image...)
+    var id : Int?
+    var name : String?
+    var date : String? // (net) - sorted ascending (default), should convert to Date
+    var status : Bool?
+    var launchWindow : Array<Any>?
+    var launchFrom : String? // Location
+    var whereToWatch : String? // URL
+    var rocket : Rocket? // Details about rocket (inc image...)
     
-    
-    init (id : Int, name : String, status : Bool, date : String, launchWindow : Array<Any>, launchFrom : String, whereToWatch : String, rocket : Rocket) {
+    // Not designated
+    convenience init (id : Int, name : String, status : Bool, date : String, launchWindow : Array<Any>, launchFrom : String, whereToWatch : String, rocket : Rocket) {
+        self.init()
         self.id = id
         self.name = name
         self.status = status
@@ -30,6 +31,32 @@ class RocketLaunch : NSObject {
         self.whereToWatch = whereToWatch
         self.rocket = rocket
     }
+    
+    // MARK: NSCoding - Used to archive custom class (object) to NSData for storage
+    required convenience init?(coder aDecoder: NSCoder) {
+        let id = aDecoder.decodeInteger(forKey: "id")
+        let status = aDecoder.decodeBool(forKey: "status")
+        guard   let name = aDecoder.decodeObject(forKey: "name") as? String,
+                let date = aDecoder.decodeObject(forKey: "date") as? String,
+                let launchWindow = aDecoder.decodeObject(forKey: "launchWindow") as? Array<Any>,
+                let launchFrom = aDecoder.decodeObject(forKey: "launchFrom") as? String,
+                let whereToWatch = aDecoder.decodeObject(forKey: "whereToWatch") as? String,
+                let rocket = aDecoder.decodeObject(forKey: "rocket") as? Rocket
+        else { return nil }
+        
+        // Create object
+        self.init(id: id, name: name, status: status, date: date, launchWindow: launchWindow, launchFrom: launchFrom, whereToWatch: whereToWatch, rocket: rocket)
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(id, forKey: "id")
+        aCoder.encode(name, forKey: "name")
+        aCoder.encode(status, forKey: "status")
+        aCoder.encode(date, forKey: "date")
+        aCoder.encode(launchWindow, forKey: "launchWindow")
+        aCoder.encode(launchFrom, forKey: "launchFrom")
+        aCoder.encode(whereToWatch, forKey: "whereToWatch")
+        aCoder.encode(rocket, forKey: "rocket")
+    }
 }
 
-// TODO: Include NSCoding to archive data as NSData
