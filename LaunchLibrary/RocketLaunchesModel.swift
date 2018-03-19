@@ -8,20 +8,22 @@
 
 import Foundation
 
-// not struct?
+// TODO: Remove print statements / wrap in DEBUG
+
+// TODO: Make struct?
 class RocketLaunchesModel: NSObject {
     // MARK: - Properties
     var launches = RocketLaunches()
-    dynamic var isLoading: Bool = false
+//    dynamic var isLoading: Bool = false
     // -> TODO: change from KVO (prone for error due to variable name change and requirement for deinit of observer).
-//    var isLoading: Bool = false {
-//        didSet {
-//            if (view != nil) {
-//                print("Loading \(isLoading)")
-//                view?.isWaitingForData(isLoading)
-//            }
-//        }
-//    }
+    var isLoading: Bool = false {
+        didSet {
+            if (view != nil) {
+                print("Loading \(isLoading)")
+                view?.isWaitingForData(isLoading)
+            }
+        }
+    }
     
     // Weak reference to the view
     weak var view: RocketLaunchesController?
@@ -33,7 +35,7 @@ class RocketLaunchesModel: NSObject {
     }
     
     // KeyPaths
-    let isLoadingKey = #keyPath(RocketLaunchesModel.isLoading)
+//    let isLoadingKey = #keyPath(RocketLaunchesModel.isLoading)
     
     fileprivate let amount = 50
     
@@ -42,7 +44,7 @@ class RocketLaunchesModel: NSObject {
         super.init()
         self.view = view
         // Use KVO to communicate changes to protocol
-        self.addObserver(self, forKeyPath: isLoadingKey, options: [.new], context: nil)
+//        self.addObserver(self, forKeyPath: isLoadingKey, options: [.new], context: nil)
     }
     
     func fetchLaunches(completed: @escaping () -> ()) {
@@ -58,13 +60,13 @@ class RocketLaunchesModel: NSObject {
     
     
     // MARK: KVO - observing values
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        //print("KVO observed change: \(keyPath)")
-        if keyPath == isLoadingKey {
-            // Tell Controller to start/stop activity monitor
-            view?.isWaitingForData(isLoading)
-        }
-    }
+//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+//        //print("KVO observed change: \(keyPath)")
+//        if keyPath == isLoadingKey {
+//            // Tell Controller to start/stop activity monitor
+//            view?.isWaitingForData(isLoading)
+//        }
+//    }
     
     func isLaunchSavedFor(launchId: Int) -> Bool {
         // Check for saved launches
