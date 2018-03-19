@@ -19,30 +19,33 @@ class RocketLaunchController: UIViewController { // Should be a UIScrollView
     @IBOutlet var rocketImage: UIImageView!
     @IBOutlet var saveButton: UIBarButtonItem!
     
-    var launch: RocketLaunch! {
-        didSet {
-            // Display properties of the launch
-            if let rocket = launch.rocket {
-                nameLabel.text = rocket.name
-                agenciesLabel.text = "Agencies Involved: \n"
-                if let agencies = rocket.agencies {
-                    for agency in agencies {
-                        if let name = agency["name"] as? String {
-                            agenciesLabel.text = "\(agenciesLabel.text!)\n\n\(name)"
-                        }
-                    }
-                } else {
-                    agenciesLabel.text = "\(agenciesLabel.text!)\n\nNone"
-                }
-                rocketImage.image = rocket.image
-            }
-        }
-    }
+    var launch: RocketLaunch!
+    var launchSaved: Bool!
     
     weak var delegate: RocketLaunchControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let launchToDisplay = launch, let rocket = launchToDisplay.rocket else { return }
+        loadUIElements(rocket: rocket)
+        guard let unwrappedBool = launchSaved else { return }
+        if unwrappedBool { toggleSaveButton() }
+    }
+    
+    func loadUIElements(rocket: Rocket) {
+        // Display properties of the rocket
+        nameLabel.text = rocket.name
+        agenciesLabel.text = "Agencies Involved: \n"
+        if let agencies = rocket.agencies {
+            for agency in agencies {
+                if let name = agency["name"] as? String {
+                    agenciesLabel.text = "\(agenciesLabel.text!)\n\n\(name)"
+                }
+            }
+        } else {
+            agenciesLabel.text = "\(agenciesLabel.text!)\n\nNone"
+        }
+        rocketImage.image = rocket.image
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {

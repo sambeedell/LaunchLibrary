@@ -46,10 +46,7 @@ class RocketLaunchesController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get current Launch
-        var launch = launchForIndexPath(sender as! IndexPath)
-        if let savedLaunch = viewModel.isLaunchSavedFor(id: launch.id!) {
-            launch = savedLaunch
-        }
+        let launch = launchForIndexPath(sender as! IndexPath)
         
         if segue.identifier == "segueToLaunch" {
             // Get a reference to the second view controller
@@ -58,6 +55,9 @@ class RocketLaunchesController: UITableViewController {
                 viewModel.viewCell = vc
                 // Set properties...
                 vc.launch = launch
+                if let launchId = launch.id {
+                    vc.launchSaved = viewModel.isLaunchSavedFor(launchId: launchId)
+                }
             }
         }
     }

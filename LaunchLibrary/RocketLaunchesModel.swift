@@ -8,9 +8,6 @@
 
 import Foundation
 
-//protocol RocketLaunchModelDelegate {
-//    func savedPressedWith(launch: RocketLaunch) -> ()
-//}
 // not struct?
 class RocketLaunchesModel: NSObject {
     // MARK: - Properties
@@ -52,7 +49,7 @@ class RocketLaunchesModel: NSObject {
         isLoading = true
         NetworkService.sharedInstance.fetchRocketLaunches(amount: amount, completionHandler: { [unowned self] (rocketLaunches) in
             // TODO: Should be weak reference to self in this completion handler...
-            print("Found: \(rocketLaunches?.count) Launches")
+            print("Found: \(rocketLaunches!.count) Launches")
             self.launches.collection = rocketLaunches
             self.isLoading = false
             completed()
@@ -69,25 +66,30 @@ class RocketLaunchesModel: NSObject {
         }
     }
     
-    func isLaunchSavedFor(id: Int) -> RocketLaunch? {
+    func isLaunchSavedFor(launchId: Int) -> Bool {
         // Check for saved launches
         let defaults = UserDefaults.standard
-        if let savedLaunchData = defaults.object(forKey: "\(id)") as? Data,
-            let savedLaunch = NSKeyedUnarchiver.unarchiveObject(with: savedLaunchData) as? RocketLaunch {
-            return savedLaunch
+        if let _ = defaults.object(forKey: "\(launchId)") as? Data {
+            //let savedLaunch = NSKeyedUnarchiver.unarchiveObject(with: savedLaunchData) as? RocketLaunch
+            print("Launch found in NSUserDefaults for launch id \(launchId)")
+            return true
         }
-        print("Launch not found in NSUserDefaults for id \(id)")
-        return nil
+        print("Launch not found in NSUserDefaults for launch id \(launchId)")
+        return false
     }
     
 }
 
 extension RocketLaunchesModel: RocketLaunchControllerDelegate {
     func savedButtonPressed(launch: RocketLaunch) {
-        // Save launch
-        let defaults = UserDefaults.standard
-        // Encode the RocketLaunch object into NSData before storing to UserDefaults
-        defaults.set(NSKeyedArchiver.archivedData(withRootObject: launch), forKey: "\(launch.id)")
+        if let launchId = launch.id {
+            // Save launch
+            let defaults = UserDefaults.standard
+            // Encode the RocketLaunch object into NSData before storing to UserDefaults
+            defaults.set(NSKeyedArchiver.archivedData(withRootObject: launch), forKey: "\(launchId)")
+            
+            print("Launch saved for launch id: \(launchId)")
+        }
     }
 }
 
