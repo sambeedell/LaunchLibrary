@@ -32,6 +32,9 @@ class RocketLaunchesController: UITableViewController {
         
         // Create view model instance with dependancy injection
         viewModel = RocketLaunchesModel(view: self)
+//        viewModel.isLoading.bind { [unowned self]
+//            self.isWaitingForData($0)
+//        }
         viewModel.fetchLaunches {
             DispatchQueue.main.async { [weak self] in
                 print(self?.viewModel ?? 0)
@@ -96,13 +99,7 @@ extension RocketLaunchesController {
         return self.view.bounds.size.width / 2.5
     }
     
-    // MARK: UICollectionViewDelegate
-//    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        if indexPath.item == (launches[indexPath.section].collection.count - 5){
-//            // Do something
-//            loadData()
-//        }
-//    }
+    // TODO: Load more launches when user scrolls to the bottom?
 }
 
 extension RocketLaunchesController: RocketLaunchesControllerDelegate {

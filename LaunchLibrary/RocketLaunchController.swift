@@ -26,8 +26,10 @@ class RocketLaunchController: UIViewController { // Should be a UIScrollView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Load Rocket data
         guard let launchToDisplay = launch, let rocket = launchToDisplay.rocket else { return }
         loadUIElements(rocket: rocket)
+        // Toggle 'Save' button
         guard let unwrappedBool = launchSaved else { return }
         if unwrappedBool { toggleSaveButton() }
     }
