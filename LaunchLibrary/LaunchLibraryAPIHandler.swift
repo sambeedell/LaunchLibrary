@@ -21,25 +21,20 @@ class LaunchLibraryAPIHandler: NSObject {
         // Iterate over all launches recieved
         for launch in launches {
             
-            // Guard launch properties required for collection
-            guard   let id = launch["id"] as? Int,
+            // Safely unwrap launch properties required for collection
+            guard let id = launch["id"] as? Int,
                 let name = launch["name"] as? String,
-                let net  = launch["net"]  as? String, // (formatted as Month, dd, yyyy hh24:mi:ss UTC)
-                let status = launch["status"] as? Bool,
-                let windSrt = launch["windowstart"] as? String,
-                let windEnd = launch["windowend"] as? String,
-                let launchFrom = launch["location"] as? [String:AnyObject], // ["name"]
-                let rocketObj = launch["rocket"] as? [String:AnyObject] // We will process this in a seperate VC
+                let net = launch["net"] as? String, // (formatted as Month, dd, yyyy hh24:mi:ss UTC)
+                let status = launch["status"] as? Int, // Integer (1 Green, 2 Red, 3 Success, 4 Failed)
+                let windowstart = launch["windowstart"] as? String,
+                let windowend = launch["windowend"] as? String
                 else {
-                    let APIHandlerError:NSError!
-                    if let id = launch["id"] as? Int {
-                        APIHandlerError = NSError(domain: Config.domain, code: 1, userInfo: [NSLocalizedFailureReasonErrorKey:"Un-able to process launch: \(id)"])
-                    } else {
-                        APIHandlerError = NSError(domain: Config.domain, code: 1, userInfo: [NSLocalizedFailureReasonErrorKey:"Un-able to process launch"])
-                    }
+                    let APIHandlerError = NSError(domain: Config.domain, code: 1, userInfo: [NSLocalizedFailureReasonErrorKey:"Un-able to process launch \(launch["id"]!)"])
                     print(APIHandlerError)
+                    print(launch)
                     continue
             }
+            
             
             // January 25, 2018 05:51:00 UTC
             
@@ -62,9 +57,22 @@ class LaunchLibraryAPIHandler: NSObject {
 //                break
 //            }
             
+            // Format status string
+            var statusString: String
+            switch status {
+            case 1:
+                statusString = "Green"
+            case 2:
+                statusString = "Red"
+            case 3:
+                statusString = "Success"
+            default:
+                statusString = "Failed"
+            }
             
             // Guard location name string
-            guard let location = launchFrom["name"] as? String else {
+            guard   let launchFrom = launch["location"] as? [String:AnyObject],
+                    let location = launchFrom["name"] as? String else {
                 let APIHandlerError = NSError(domain: Config.domain, code: 1, userInfo: [NSLocalizedFailureReasonErrorKey:"Un-able to process launch location: \(id)"])
                 print(APIHandlerError)
                 continue
@@ -84,7 +92,8 @@ class LaunchLibraryAPIHandler: NSObject {
             // TODO: Process rocket info asynchronously
             //
             //
-            guard   let rocketID = rocketObj["id"] as? Int,
+            guard   let rocketObj = launch["rocket"] as? [String:AnyObject],
+                let rocketID = rocketObj["id"] as? Int,
                 let rocketName = rocketObj["name"] as? String,
                 let agenices = rocketObj["agencies"] as? Array<[String:AnyObject]>,
                 let imageStr = rocketObj["imageURL"] as? String else {
@@ -102,7 +111,7 @@ class LaunchLibraryAPIHandler: NSObject {
             //
             
             // Create Rocket Launch object
-            let rocketLaunch = RocketLaunch(id: id, name: name, status: status, date: net, launchWindow: [windSrt,windEnd], launchFrom: location, whereToWatch: watchStr, rocket: rocket)
+            let rocketLaunch = RocketLaunch(id: id, name: name, status: statusString, date: net, launchWindow: [windowstart,windowend], launchFrom: location, whereToWatch: watchStr, rocket: rocket)
             
             // Store Rocket Launch in Library (RocketLaunches collection)
             launchLibrary.append(rocketLaunch)

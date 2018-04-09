@@ -24,6 +24,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        guard let splitViewController = window?.rootViewController as? UISplitViewController,
+            let leftNavController = splitViewController.viewControllers.first as? UINavigationController,
+            let masterViewController = leftNavController.topViewController as? LaunchesTableController,
+            let detailViewController = splitViewController.viewControllers.last as? LaunchDetailController
+            else { fatalError() }
+        
+        // TODO: Make detail look pretty in split view before loading the launches... (animation?)
+        // Default Details View...
+//        detailViewController.launch = ???
+        masterViewController.viewModel = RocketLaunchesModel()
+        
+        if #available(iOS 11.0, *) {
+            leftNavController.navigationBar.prefersLargeTitles = true
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        // Weak references for communication (must avoid retain cycle)
+        masterViewController.delegate = detailViewController
+        
+        
         return true
     }
 

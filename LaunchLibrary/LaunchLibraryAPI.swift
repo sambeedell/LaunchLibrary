@@ -56,7 +56,7 @@ class LaunchLibraryAPI {
                 }
                 
                 if (resultsDictionary["status"] as? String) != nil {
-                    let APIError = NSError(domain: Config.domain, code: 0, userInfo: [NSLocalizedFailureReasonErrorKey:"Incorrect API call, check URL: \(resultsDictionary["msg"])"])
+                    let APIError = NSError(domain: Config.domain, code: 0, userInfo: [NSLocalizedFailureReasonErrorKey:"Incorrect API call, check URL: \(resultsDictionary["msg"]!)"])
                     OperationQueue.main.addOperation({
                         completion(nil, APIError)
                     })

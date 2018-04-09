@@ -1,0 +1,12 @@
+
+/* Class = "UINavigationItem"; title = "Launch Library"; ObjectID = "8Tg-mF-Qu8"; */
+"8Tg-mF-Qu8.title" = "Launch Library";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "8lH-7d-N66"; */
+"8lH-7d-N66.text" = "Name";
+
+/* Class = "UILabel"; text = "Agencies"; ObjectID = "HBE-ct-nxG"; */
+"HBE-ct-nxG.text" = "Agencies";
+
+/* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "pYq-iI-7ku"; */
+"pYq-iI-7ku.title" = "Save";

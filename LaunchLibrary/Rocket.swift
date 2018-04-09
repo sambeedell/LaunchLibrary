@@ -14,7 +14,20 @@ class Rocket : NSObject, NSCoding {
     var name : String?
     var agencies : Array<[String:AnyObject]>?
     var imageString : String? // URL
-    var image : UIImage = #imageLiteral(resourceName: "no-image-placeholder.jpg")
+    var image : UIImage = #imageLiteral(resourceName: "no-image-placeholder.jpg") {
+        didSet {
+            smallImage = image.resized(withPercentage: 0.2)
+        }
+    }
+    var smallImage: UIImage? {
+        didSet {
+            // Set notification to update UI...
+            if let name = self.name {
+                NotificationCenter.default.post(name:
+                    NSNotification.Name(rawValue: Config.smallImageComplete), object: nil, userInfo: ["rocketName":name])
+            }
+        }
+    }
     
     convenience init (id : Int, name : String, agencies : Array<[String:AnyObject]>, imageString : String) {
         self.init()

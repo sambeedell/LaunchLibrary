@@ -10,7 +10,12 @@ import Foundation
 
 class RocketLaunches: NSObject {
     
-    var collection: [RocketLaunch]?
+    var collection: [RocketLaunch]? {
+        didSet {
+            // Add listeners to launch.rocket.smallImage for UI display...
+            // ???
+        }
+    }
     
 //    override init() {
 //        super.init()

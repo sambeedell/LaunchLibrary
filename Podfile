@@ -8,6 +8,7 @@ target 'LaunchLibrary' do
 
   # Pods for LaunchLibrary
   pod 'Alamofire', '~> 4.7'
+  pod 'Hero'
 
 #  target 'LaunchLibraryTests' do
 #    inherit! :search_paths

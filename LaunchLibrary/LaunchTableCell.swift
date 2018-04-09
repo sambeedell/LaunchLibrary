@@ -1,5 +1,5 @@
 //
-//  RocketLaunchCell.swift
+//  LaunchTableCell.swift
 //  LaunchLibrary
 //
 //  Created by Sam Beedell on 24/01/2018.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class RocketLaunchCell: UITableViewCell {
+class LaunchTableCell: UITableViewCell {
     
     // MARK: Properties
-    
+    @IBOutlet var cellImage: UIImageView!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var statusLabel: UILabel!
@@ -21,10 +21,10 @@ class RocketLaunchCell: UITableViewCell {
         didSet {
             // Format Properties
             if let date = launch?.date {
-                dateLabel.text = String(date.characters.dropLast(12)) // Remove Time!
+                let endIndex = date.index(date.endIndex, offsetBy: -12)
+                dateLabel.text = String(date.substring(to: endIndex)) // Remove Time!
             }
-            if let status = launch?.status {
-                let statusString : String = status == true ? "Ok!" : "Unlikely..."
+            if let statusString = launch?.status {
                 statusLabel.text = statusString
             }
             if let name = launch?.name {

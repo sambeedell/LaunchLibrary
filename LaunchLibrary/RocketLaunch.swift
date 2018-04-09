@@ -13,14 +13,15 @@ class RocketLaunch : NSObject, NSCoding {
     var id : Int?
     var name : String?
     var date : String? // (net) - sorted ascending (default), should convert to Date
-    var status : Bool?
+    var status : String? 
     var launchWindow : Array<Any>?
     var launchFrom : String? // Location
     var whereToWatch : String? // URL
     var rocket : Rocket? // Details about rocket (inc image...)
+    var isSaved: Bool = false
     
     // Not designated
-    convenience init (id : Int, name : String, status : Bool, date : String, launchWindow : Array<Any>, launchFrom : String, whereToWatch : String, rocket : Rocket) {
+    convenience init (id : Int, name : String, status : String, date : String, launchWindow : Array<Any>, launchFrom : String, whereToWatch : String, rocket : Rocket) {
         self.init()
         self.id = id
         self.name = name
@@ -35,8 +36,8 @@ class RocketLaunch : NSObject, NSCoding {
     // MARK: NSCoding - Used to archive custom class (object) to NSData for storage
     required convenience init?(coder aDecoder: NSCoder) {
         let id = aDecoder.decodeInteger(forKey: "id")
-        let status = aDecoder.decodeBool(forKey: "status")
         guard   let name = aDecoder.decodeObject(forKey: "name") as? String,
+                let status = aDecoder.decodeObject(forKey: "status") as? String,
                 let date = aDecoder.decodeObject(forKey: "date") as? String,
                 let launchWindow = aDecoder.decodeObject(forKey: "launchWindow") as? Array<Any>,
                 let launchFrom = aDecoder.decodeObject(forKey: "launchFrom") as? String,

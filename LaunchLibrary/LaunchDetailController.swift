@@ -12,29 +12,39 @@ protocol RocketLaunchControllerDelegate: class {
     func savedButtonPressed(launch: RocketLaunch) -> ()
 }
 
-class RocketLaunchController: UIViewController { // Should be a UIScrollView
+class LaunchDetailController: UIViewController { // Should be a UIScrollView
+    
+    var selectedIndex: IndexPath?
+    
+    // TODO: Add Activity Indicator to image placeholder while image is loading...
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var agenciesLabel: UILabel!
     @IBOutlet var rocketImage: UIImageView!
     @IBOutlet var saveButton: UIBarButtonItem!
     
-    var launch: RocketLaunch!
-    var launchSaved: Bool!
+    var launch: RocketLaunch! {
+        didSet {
+            if let rocket = launch.rocket {
+                loadUIElements(rocket)
+            }
+            // Update save state
+            launchSaved = launch.isSaved
+        }
+    }
+    var launchSaved: Bool! {
+        didSet {
+            toggleSaveButton(launchSaved)
+        }
+    }
     
     weak var delegate: RocketLaunchControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Load Rocket data
-        guard let launchToDisplay = launch, let rocket = launchToDisplay.rocket else { return }
-        loadUIElements(rocket: rocket)
-        // Toggle 'Save' button
-        guard let unwrappedBool = launchSaved else { return }
-        if unwrappedBool { toggleSaveButton() }
     }
     
-    func loadUIElements(rocket: Rocket) {
+    func loadUIElements(_ rocket: Rocket) {
         // Display properties of the rocket
         nameLabel.text = rocket.name
         agenciesLabel.text = "Agencies Involved: \n"
@@ -54,16 +64,23 @@ class RocketLaunchController: UIViewController { // Should be a UIScrollView
         // Save to NSUserDefaults
         // TODO: No completion handler?
         if let delegate = delegate {
+            // Update launch
+            launch.isSaved = true
             delegate.savedButtonPressed(launch: launch)
             // Update UI
-            toggleSaveButton()
+            launchSaved = true
         }
     }
     
-    func toggleSaveButton() {
+    func toggleSaveButton(_ saved: Bool) {
         // Update UIBarButtonItem
-        saveButton.title = "Saved"
-        self.navigationItem.rightBarButtonItem?.isEnabled = false
+        saveButton.title = saved ? "Saved" : "Save"
+        self.navigationItem.rightBarButtonItem?.isEnabled = !saved
     }
-    
+}
+
+extension LaunchDetailController: RocketLaunchesControllerDataSource {
+    func displaySelectionFor(_ newLaunch: RocketLaunch) {
+        launch = newLaunch
+    }
 }

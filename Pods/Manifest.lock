@@ -1,0 +1,20 @@
+PODS:
+  - Alamofire (4.7.1)
+  - Hero (1.1.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.7)
+  - Hero
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - Hero
+
+SPEC CHECKSUMS:
+  Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
+  Hero: ce59e81c79390613d97b43da7179e2c5e1017e04
+
+PODFILE CHECKSUM: 7a9a2a4a4bd6fc697942c4ab7134ba6eeb2a63ab
+
+COCOAPODS: 1.5.0

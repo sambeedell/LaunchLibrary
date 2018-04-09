@@ -12,6 +12,9 @@ enum Config {
     // fileprivate - https://launchlibrary.net/1.3/launch?next=5
     static let baseURL = "https://launchlibrary.net/1.3/launch"
     static let domain = "com.LaunchLibrary"
+    
+    // Notifications
+    static let smallImageComplete = "smallImageDownloaded"
 }
 
 enum Color {
