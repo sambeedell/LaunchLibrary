@@ -12,8 +12,7 @@ class RocketLaunches: NSObject {
     
     var collection: [RocketLaunch]? {
         didSet {
-            // Add listeners to launch.rocket.smallImage for UI display...
-            // ???
+            // Add listeners ???
         }
     }
     

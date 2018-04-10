@@ -105,8 +105,40 @@ extension LaunchesGridController {
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: IndexPath) -> UICollectionReusableView {
+        
+        switch kind {
+            
+        case UICollectionElementKindSectionHeader:
+            
+            let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) 
+            headerView.frame.size.height = 100
+            let label = UILabel(frame: headerView.frame)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMMM yy"
+            label.text = formatter.string(from: viewModel.sections[indexPath.section])
+            label.backgroundColor = .lightGray
+            headerView.addSubview(label)
+            return headerView
+            
+//        case UICollectionElementKindSectionFooter:
+//            let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Footer", for: indexPath) as! UICollectionReusableView
+//
+//            footerView.backgroundColor = .green
+//            return footerView
+            
+        default:
+            
+            assert(false, "Unexpected element kind")
+        }
+    }
+    
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return viewModel.launchCollection.count
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.launches.collection?.count ?? 0
+        return viewModel.launchCollection[section].collection?.count ?? 0
     }
     
     // UICollectionViewFlowLayout

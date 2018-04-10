@@ -57,6 +57,10 @@ class LaunchesTableController: UITableViewController {
 
     func refreshViewAsync() {
         DispatchQueue.main.async { [unowned self] in
+            // Include animation when items added
+            //tableView.beginUpdates()
+            //tableView.insertRows()
+            //tableView.endUpdates()
             self.tableView.reloadData()
         }
     }
@@ -129,16 +133,18 @@ extension LaunchesTableController {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel()
-        label.text = "Header"
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM yy"
+        label.text = formatter.string(from: viewModel.sections[section])
         label.backgroundColor = .lightGray
         return label
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return viewModel.launchCollection.count
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.launches.collection?.count ?? 0
+        return viewModel.launchCollection[section].collection?.count ?? 0
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         // Nib aspect ratio = 2.7 : 1

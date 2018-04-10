@@ -13,23 +13,25 @@ import Foundation
 // TODO: Make struct?
 class RocketLaunchesModel: NSObject {
     // MARK: - Properties
-    var launches = RocketLaunches() // DELETE ME?
+    var parsedLaunches: RocketLaunches? = RocketLaunches()
     var launchCollection = [RocketLaunches]()
     
     
     // Create NSSet of the sections, this is for every month in the next year
     // Use NSSet so we can access 'containsObject'
-    var sections: NSSet = {
+    var sections: [Date] = {
         var array: [Date] = []
-        var month: Date?
+        var thisMonth: Date = {
+            let calendar = NSCalendar.current
+            let components = calendar.dateComponents([.year, .month], from: Date()) // Today - this month
+            return calendar.date(from: components)!
+        }()
         for i in 0...12 { // 1->12 (12 = 1 year = current max)
-            month = Calendar.current.date(byAdding: .month, value: i, to: Date())
-            if let date = month {
+            if let date = Calendar.current.date(byAdding: .month, value: i, to: thisMonth) {
                 array.append(date)
             }
-            
         }
-        return NSSet(array: array)
+        return array //NSSet(array: array)
     }()
     
     
@@ -62,12 +64,10 @@ class RocketLaunchesModel: NSObject {
     weak var view: AnyObject! {
         // When the view is set, we need some data to display...
         didSet {
-            if let count = launches.collection?.count {
-                if count > 1 {
-                    // Use stored Launches
-                    print("using stored launches")
-                    return
-                }
+            if launchCollection.count > 1 {
+                // Use stored Launches
+                print("using stored launches")
+                return
             } else {
                 // Load Launches
                 //print("attempting to load launches")
@@ -124,65 +124,85 @@ class RocketLaunchesModel: NSObject {
             // TODO: Should be weak reference to self in this completion handler...
             print("Found: \(rocketLaunches!.count) Launches")
             
-            self.launches.collection = rocketLaunches
-//            self.seperateIntoSections(collection:rocketLaunches)
+            if let safe = self.parsedLaunches {
+                safe.collection = rocketLaunches
+                self.launchCollection = self.getCollectionInSections()
+            }
+            
+            //print("Collection complete and compiled into sections seperated by Month: \(self.launchCollection)")
             
             self.isLoading = false
             completed()
+            print("Updating UI...")
         })
     }
     
-    func seperateIntoSections(collection:[RocketLaunch]?) {
+    func getCollectionInSections() -> [RocketLaunches] {
         
-        guard let collection = collection else {
-            print("Error: data is nil")
-            return
+        var tempLaunchCollection = [RocketLaunches]()
+        
+        // TODO: Check efficiency? -> TEST
+        for (_, month) in sections.enumerated() {
+            // Create an array of RocketLaunch for each month & append
+            let sectionForMonth = createSectionFor(month: month)
+            tempLaunchCollection.append(sectionForMonth)
+            // Exit quickly if all launches have been processed
+            if parsedLaunches?.collection?.count == 0 {
+                parsedLaunches = nil
+                return tempLaunchCollection
+            }
         }
-        
-        // 1. Enumerate through returned launches
-        // 2. Get Date (formatted) of each launch
-        // 3. Add the launch to launches
-        // 4. If we hit a new Month, append launches to collection and start a new array of launches
-        
-        
-        
-        // make class property
-//        var launchCollection = [RocketLaunches]()
-        
-        for (_, _) in sections.allObjects.enumerated() {
-            let launches3 = createSectionFor(collection)
-            launchCollection.append(launches3)
-        }
-        
-        print(launchCollection)
-        
-        
+        return tempLaunchCollection
     }
     
-    func createSectionFor(_ collection:[RocketLaunch]) -> RocketLaunches {
-        let launches2 = RocketLaunches()
+    func createSectionFor(month: Date) -> RocketLaunches {
         
-        // Build the launches into thier sections
+        guard let collection = parsedLaunches?.collection else {
+            print("Error: data is empty")
+            return RocketLaunches() // -> return empty object
+        }
+        
+        // Create a collection of RocketLaunch(es)
+        var section = [RocketLaunch]()
+        
+        // Enumerate through all launches in collection
         for (_, launch) in collection.enumerated() {
             if let date = launch.date {
                 let calendar = NSCalendar.current
                 let components = calendar.dateComponents([.year, .month], from: date)
-                let month = calendar.date(from: components)
-                //print(month!)
-                
-                // if the item's date equals the section's date then add it
-                if sections.contains(month as Any) {
-                    launches2.collection?.append(launch)
+                let launchDate = calendar.date(from: components)
+                // Build the launches into thier sections
+                if let launchDate = launchDate {
+                    //print("\(month) == \(launchDate)")
+                    if month == launchDate {
+                        //print("Added launch for date: \(month)")
+                        //print(launch)
+                        section.append(launch)
+                    } else {
+                        //print("no")//"Launch not found for date: \(month)")
+                    }
+                    
+                    // if the item's date equals the section's date then add it
+                    //if sections.contains(month) {
+                        
+                } else {
+                    print("Error creating sections")
                 }
             } else {
                 print("Error creating sections")
             }
-            
-            
-            
         }
         
-        return launches2
+        // Create the RocketLaunches object and SET it's collection
+        let rocketLaunches = RocketLaunches()
+        rocketLaunches.collection = section
+        
+        // Remove finished values (cannot mutate while enumerating)
+        parsedLaunches?.collection = collection.filter { !section.contains($0) }
+        
+        print("Found: \(section.count) launches in \(month), \(parsedLaunches?.collection?.count ?? 0) remaining")
+        
+        return rocketLaunches
         
     }
 }
@@ -190,26 +210,20 @@ class RocketLaunchesModel: NSObject {
 // MARK: - Public Utility Function
 extension RocketLaunchesModel {
     func launchForIndexPath(_ indexPath: IndexPath) -> RocketLaunch {
-        return launches.collection?[(indexPath as NSIndexPath).row] ?? RocketLaunch()
+        return launchCollection[indexPath.section].collection?[(indexPath as NSIndexPath).row] ?? RocketLaunch()
     }
     fileprivate func indexPathForRocket(_ rocket: Rocket) -> [IndexPath] {
-        let section = 0
-        
-        guard let collection = launches.collection else {
-            print("No launches available")
-            return []
-        }
-        
+        // https://stackoverflow.com/questions/31082833/use-a-functional-technique-to-discover-an-nsindexpath?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
         // Enumerate over all launches in collection
-//        let indexPaths = launches.enumerated().flatMap() { (section, collection) in
-        let indexPaths = collection.enumerated().filter() { (_, aLaunch) in
+        let indexPaths = launchCollection.enumerated().flatMap() { (section, launches) in
+            launches.collection?.enumerated().filter() { (_, aLaunch) in
                 aLaunch.rocket == rocket
                 }.map { (row, _) in
                     IndexPath(row: row, section: section)
-//        }
+            }
         }
-        
-        return indexPaths
+        // TODO: Check here
+        return indexPaths.first ?? []
     }
 }
 
@@ -226,9 +240,3 @@ extension RocketLaunchesModel: RocketLaunchControllerDelegate {
     }
 }
 
-
-
-// Include animation when items added
-//tableView.beginUpdates()
-//tableView.insertRows()
-//tableView.endUpdates()
