@@ -12,16 +12,17 @@ class RocketLaunch : NSObject, NSCoding {
     
     var id : Int?
     var name : String?
-    var date : String? // (net) - sorted ascending (default), should convert to Date
+    var date : Date? // (net) - sorted ascending (default)
     var status : String? 
     var launchWindow : Array<Any>?
     var launchFrom : String? // Location
     var whereToWatch : String? // URL
     var rocket : Rocket? // Details about rocket (inc image...)
     var isSaved: Bool = false
+    var indexPath: IndexPath?
     
     // Not designated
-    convenience init (id : Int, name : String, status : String, date : String, launchWindow : Array<Any>, launchFrom : String, whereToWatch : String, rocket : Rocket) {
+    convenience init (id : Int, name : String, status : String, date : Date, launchWindow : Array<Any>, launchFrom : String, whereToWatch : String, rocket : Rocket) {
         self.init()
         self.id = id
         self.name = name
@@ -38,7 +39,7 @@ class RocketLaunch : NSObject, NSCoding {
         let id = aDecoder.decodeInteger(forKey: "id")
         guard   let name = aDecoder.decodeObject(forKey: "name") as? String,
                 let status = aDecoder.decodeObject(forKey: "status") as? String,
-                let date = aDecoder.decodeObject(forKey: "date") as? String,
+                let date = aDecoder.decodeObject(forKey: "date") as? Date,
                 let launchWindow = aDecoder.decodeObject(forKey: "launchWindow") as? Array<Any>,
                 let launchFrom = aDecoder.decodeObject(forKey: "launchFrom") as? String,
                 let whereToWatch = aDecoder.decodeObject(forKey: "whereToWatch") as? String,

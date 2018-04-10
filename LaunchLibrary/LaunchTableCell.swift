@@ -21,8 +21,8 @@ class LaunchTableCell: UITableViewCell {
         didSet {
             // Format Properties
             if let date = launch?.date {
-                let endIndex = date.index(date.endIndex, offsetBy: -12)
-                dateLabel.text = String(date.substring(to: endIndex)) // Remove Time!
+//                let endIndex = date.index(date.endIndex, offsetBy: -12)
+//                dateLabel.text = String(date.substring(to: endIndex)) // Remove Time!
             }
             if let statusString = launch?.status {
                 statusLabel.text = statusString

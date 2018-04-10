@@ -16,18 +16,25 @@ class Rocket : NSObject, NSCoding {
     var imageString : String? // URL
     var image : UIImage = #imageLiteral(resourceName: "no-image-placeholder.jpg") {
         didSet {
-            smallImage = image.resized(withPercentage: 0.2)
+//            // TODO: hide this GCD call?
+//            // TODO: Check these are synchronous (serial) tasks on an asynchronous (concurrent) thread
+//            DispatchQueue.global(qos: .userInitiated).async { [unowned self] in
+//                self.smallImage = self.image.resized(withPercentage: 0.2)
+//                self.imageColour = self.smallImage?.averageColor
+//            }
         }
     }
     var smallImage: UIImage? {
         didSet {
+            // TODO: is notification from model object best practise?
             // Set notification to update UI...
             if let name = self.name {
                 NotificationCenter.default.post(name:
-                    NSNotification.Name(rawValue: Config.smallImageComplete), object: nil, userInfo: ["rocketName":name])
+                    NSNotification.Name(rawValue: Config.smallImageComplete), object: nil, userInfo: ["rocket":self,"rocketName":name])
             }
         }
     }
+    var imageColour: UIColor?
     
     convenience init (id : Int, name : String, agencies : Array<[String:AnyObject]>, imageString : String) {
         self.init()
@@ -37,7 +44,10 @@ class Rocket : NSObject, NSCoding {
         self.imageString = imageString
         // Async dl image
         UIImage().imageFromServer(urlString: imageString) { (image) in
+            // TODO: Check these are synchronous (serial) tasks on an asynchronous (concurrent) thread
             self.image = image
+            self.smallImage = image.resized(withPercentage: 0.2)
+            self.imageColour = self.smallImage?.averageColor
         }
     }
     

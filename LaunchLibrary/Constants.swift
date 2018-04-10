@@ -15,6 +15,11 @@ enum Config {
     
     // Notifications
     static let smallImageComplete = "smallImageDownloaded"
+    
+    // Date formatter
+    // (formatted as Month, dd, yyyy hh24:mi:ss UTC)
+    // e.g. "April 11, 2018 22:34:00 UTC"
+    static let isoDate = "MMMM dd, yyyy HH:mm:ssZ"
 }
 
 enum Color {

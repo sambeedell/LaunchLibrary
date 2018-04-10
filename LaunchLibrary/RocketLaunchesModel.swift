@@ -13,7 +13,27 @@ import Foundation
 // TODO: Make struct?
 class RocketLaunchesModel: NSObject {
     // MARK: - Properties
-    var launches = RocketLaunches()
+    var launches = RocketLaunches() // DELETE ME?
+    var launchCollection = [RocketLaunches]()
+    
+    
+    // Create NSSet of the sections, this is for every month in the next year
+    // Use NSSet so we can access 'containsObject'
+    var sections: NSSet = {
+        var array: [Date] = []
+        var month: Date?
+        for i in 0...12 { // 1->12 (12 = 1 year = current max)
+            month = Calendar.current.date(byAdding: .month, value: i, to: Date())
+            if let date = month {
+                array.append(date)
+            }
+            
+        }
+        return NSSet(array: array)
+    }()
+    
+    
+    // Setting this property to true will automatically load more launches
     var isLoading: Bool = false {
         didSet {
             if let v = view as? LaunchesTableController {
@@ -50,7 +70,7 @@ class RocketLaunchesModel: NSObject {
                 }
             } else {
                 // Load Launches
-                print("attempting to load launches")
+                //print("attempting to load launches")
                 isLoading = true
             }
         }
@@ -64,59 +84,32 @@ class RocketLaunchesModel: NSObject {
     
     override init() {
         super.init()
-        //NotificationCenter.default.addObserver(self, selector: #selector(updateUI(forNotification:)), name: NSNotification.Name(rawValue: Config.smallImageComplete), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUI(notification:)), name: NSNotification.Name(rawValue: Config.smallImageComplete), object: nil)
     }
     
-    func updateUI(forNotification notification: NSNotification) {
+    func updateUI(notification: NSNotification) {
         // setting isLoading to 'false' will refresh UI
         //isLoading = false
-//
-//        print(notification.userInfo?["rocketID"])
-//
-//        guard let rocket = notification.userInfo?["rocket"] else {
-//            print("no rocket found")
-//            return
-//        }
-//
-//        guard let _ = rocket as? Rocket else {
-//            print("rocket is not rocket?")
-//            return
-//        }
-//
-//        if let rocket = notification.userInfo?["rocket"] as? Rocket {
+
+        guard let rocket = notification.userInfo?["rocket"] as? Rocket else {
+            print("Error: RocketLaunchesModel.updateUI() -> Rocket is not Rocket?")
+            return
+        }
         
-        if let rocketName = notification.userInfo?["rocketName"] as? String {
-            // Search for indexPath
-            let indexPath = getIndexPath(forRocket: rocketName)
-            print(indexPath) // Must NOT be an array
-            
-            DispatchQueue.main.async {
-                // Must update individual cell to avoid lagging UI
-                if let v = self.view as? LaunchesTableController {
-                    v.tableView.reloadRows(at: indexPath, with: .top)
-                    return
-                }
-                if let v = self.view as? LaunchesGridController {
-                    v.collectionView?.reloadItems(at: indexPath)
-                    return
-                }
+        // Update corresponding cells for rocket updates
+        let indexPath = indexPathForRocket(rocket)
+        DispatchQueue.main.async {
+            // Must update individual cell to avoid lagging UI
+            if let v = self.view as? LaunchesTableController {
+                v.tableView.reloadRows(at: indexPath, with: .fade)
+                return
+            }
+            if let v = self.view as? LaunchesGridController {
+                v.collectionView?.reloadItems(at: indexPath)
+                return
             }
         }
-    }
-    
-    fileprivate func getIndexPath(forRocket rocket: String) -> [IndexPath] {
-        print(rocket)
-        // Enumerate over all launches in collection
-        // Process each object by filtering for match case
-        let indexPaths = launches.collection?.enumerated().filter() { (section, launch) in
-            // If launch has matching rocket object
-            launch.rocket?.name == rocket
-            }.map { (row, _) in
-                // Process matching object
-                IndexPath(row: row, section: 1)
-        } ?? []
         
-        return indexPaths
     }
     
     func fetchLaunches(completed: @escaping () -> ()) {
@@ -130,10 +123,67 @@ class RocketLaunchesModel: NSObject {
         NetworkService.sharedInstance.fetchRocketLaunches(amount: amount, completionHandler: { [unowned self] (rocketLaunches) in
             // TODO: Should be weak reference to self in this completion handler...
             print("Found: \(rocketLaunches!.count) Launches")
+            
             self.launches.collection = rocketLaunches
+//            self.seperateIntoSections(collection:rocketLaunches)
+            
             self.isLoading = false
             completed()
         })
+    }
+    
+    func seperateIntoSections(collection:[RocketLaunch]?) {
+        
+        guard let collection = collection else {
+            print("Error: data is nil")
+            return
+        }
+        
+        // 1. Enumerate through returned launches
+        // 2. Get Date (formatted) of each launch
+        // 3. Add the launch to launches
+        // 4. If we hit a new Month, append launches to collection and start a new array of launches
+        
+        
+        
+        // make class property
+//        var launchCollection = [RocketLaunches]()
+        
+        for (_, _) in sections.allObjects.enumerated() {
+            let launches3 = createSectionFor(collection)
+            launchCollection.append(launches3)
+        }
+        
+        print(launchCollection)
+        
+        
+    }
+    
+    func createSectionFor(_ collection:[RocketLaunch]) -> RocketLaunches {
+        let launches2 = RocketLaunches()
+        
+        // Build the launches into thier sections
+        for (_, launch) in collection.enumerated() {
+            if let date = launch.date {
+                let calendar = NSCalendar.current
+                let components = calendar.dateComponents([.year, .month], from: date)
+                let month = calendar.date(from: components)
+                //print(month!)
+                
+                // if the item's date equals the section's date then add it
+                if sections.contains(month as Any) {
+                    launches2.collection?.append(launch)
+                }
+            } else {
+                print("Error creating sections")
+            }
+            
+            
+            
+        }
+        
+        return launches2
+        
     }
 }
 
@@ -141,6 +191,25 @@ class RocketLaunchesModel: NSObject {
 extension RocketLaunchesModel {
     func launchForIndexPath(_ indexPath: IndexPath) -> RocketLaunch {
         return launches.collection?[(indexPath as NSIndexPath).row] ?? RocketLaunch()
+    }
+    fileprivate func indexPathForRocket(_ rocket: Rocket) -> [IndexPath] {
+        let section = 0
+        
+        guard let collection = launches.collection else {
+            print("No launches available")
+            return []
+        }
+        
+        // Enumerate over all launches in collection
+//        let indexPaths = launches.enumerated().flatMap() { (section, collection) in
+        let indexPaths = collection.enumerated().filter() { (_, aLaunch) in
+                aLaunch.rocket == rocket
+                }.map { (row, _) in
+                    IndexPath(row: row, section: section)
+//        }
+        }
+        
+        return indexPaths
     }
 }
 

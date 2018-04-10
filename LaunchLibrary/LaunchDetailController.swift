@@ -46,7 +46,9 @@ class LaunchDetailController: UIViewController { // Should be a UIScrollView
     
     func loadUIElements(_ rocket: Rocket) {
         // Display properties of the rocket
-        nameLabel.text = rocket.name
+        navigationController?.title = rocket.name
+        //nameLabel.isHidden = true
+        nameLabel.text = launch.launchFrom
         agenciesLabel.text = "Agencies Involved: \n"
         if let agencies = rocket.agencies {
             for agency in agencies {

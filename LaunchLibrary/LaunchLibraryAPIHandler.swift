@@ -38,24 +38,28 @@ class LaunchLibraryAPIHandler: NSObject {
             
             // January 25, 2018 05:51:00 UTC
             
-//            // Guard date formatter
-//            let dateFormatterGet = DateFormatter()
-//            dateFormatterGet.dateFormat = "MMMM dd, yy hh:mm:ss"
-//
-//            guard let date = dateFormatterGet.date(from: net) else {
-//                // Problem formatting date
-//                break
-//            }
-//
-//            guard let startDate = dateFormatterGet.date(from: windSrt) else {
-//                // Problem formatting start date
-//                break
-//            }
-//
-//            guard let endDate = dateFormatterGet.date(from: windEnd) else {
-//                // Problem formatting end date
-//                break
-//            }
+            // Guard date formatter
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = Config.isoDate
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            
+            guard let date = dateFormatter.date(from: net) else {
+                // Problem formatting date
+                print("Error: LaunchLibraryAPIHandler.handleLaunchLibraryData() -> Unable to format date \(net)")
+                break
+            }
+
+            guard let startDate = dateFormatter.date(from: windowstart) else {
+                // Problem formatting date
+                print("Error: LaunchLibraryAPIHandler.handleLaunchLibraryData() -> Unable to format startDate \(windowstart)")
+                break
+            }
+
+            guard let endDate = dateFormatter.date(from: windowend) else {
+                // Problem formatting date
+                print("Error: LaunchLibraryAPIHandler.handleLaunchLibraryData() -> Unable to format endDate \(windowend)")
+                break
+            }
             
             // Format status string
             var statusString: String
@@ -66,7 +70,7 @@ class LaunchLibraryAPIHandler: NSObject {
                 statusString = "Red"
             case 3:
                 statusString = "Success"
-            default:
+            default: // 0
                 statusString = "Failed"
             }
             
@@ -111,7 +115,7 @@ class LaunchLibraryAPIHandler: NSObject {
             //
             
             // Create Rocket Launch object
-            let rocketLaunch = RocketLaunch(id: id, name: name, status: statusString, date: net, launchWindow: [windowstart,windowend], launchFrom: location, whereToWatch: watchStr, rocket: rocket)
+            let rocketLaunch = RocketLaunch(id: id, name: name, status: statusString, date: date, launchWindow: [startDate,endDate], launchFrom: location, whereToWatch: watchStr, rocket: rocket)
             
             // Store Rocket Launch in Library (RocketLaunches collection)
             launchLibrary.append(rocketLaunch)

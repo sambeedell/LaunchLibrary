@@ -101,12 +101,23 @@ extension LaunchesTableController {
         //let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! LaunchTableCell
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! LaunchTableCell2
         cell.backgroundColor = UIColor.clear
+        cell.tag = indexPath.row
+        
         // Get the correct launch for the row
-//        cell.launch = viewModel.launchForIndexPath(indexPath)
         let launch = viewModel.launchForIndexPath(indexPath)
-        let image = launch.rocket?.smallImage
-        cell.cellImage.image = image
+        if let image = launch.rocket?.smallImage {
+            // Use smaller image
+            cell.cellImage.image = image
+        } else {
+            // Use placeholder image
+            cell.cellImage.image = launch.rocket?.image
+        }
+        
         cell.cellLabel.text = launch.name
+        // TODO: Additional details....
+        
+        
+        
         // Integrate Hero
         cell.hero.modifiers = [.fade, .translate(x:-100)]
         cell.cellImage.hero.id = "image_\(indexPath.item)"
